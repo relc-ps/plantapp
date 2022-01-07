@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Navigation from "./navigation";
 import { View } from "react-native";
 import { AppLoading } from "expo";
-// import { Asset } from "expo-asset";
+import { Asset } from "expo-asset";
 
 // import all used images
 const images = [
