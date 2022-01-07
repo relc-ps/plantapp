@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Block from "./../components/Block";
 
 export const Welcome = () => {
   return (
-    <View>
+    <Block>
       <Text>Welcome</Text>
-    </View>
+    </Block>
   );
 };
 

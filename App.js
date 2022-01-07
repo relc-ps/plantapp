@@ -3,6 +3,7 @@ import Navigation from "./navigation";
 import { View } from "react-native";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
+import Block from "./components/Block";
 
 // import all used images
 const images = [
@@ -37,7 +38,7 @@ export default class App extends Component {
     //we're cache all the images
     //fro better performance on the app
     const cacheImages = images.map((img) => {
-      return Asset.fromModule(image).downloadAsync();
+      return Asset.fromModule(images).downloadAsync();
     });
 
     return Promise.all(cacheImages);
@@ -54,9 +55,9 @@ export default class App extends Component {
       );
     }
     return (
-      <View>
+      <Block>
         <Navigation />
-      </View>
+      </Block>
     );
   }
 }
