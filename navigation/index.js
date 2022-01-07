@@ -3,7 +3,7 @@ import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
 import { Image } from "react-native";
-import { Welcome } from "./../screens/Welcome.js";
+import Welcome from "./../screens/Welcome";
 
 const screens = createStackNavigator(
   {
