@@ -1,112 +1,62 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { Component } from "react";
+import Navigation from "./navigation";
+import { View } from "react-native";
+import { AppLoading } from "expo";
+// import { Asset } from "expo-asset";
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// import all used images
+const images = [
+  require("./assets/icons/back.png"),
+  require("./assets/icons/plants.png"),
+  require("./assets/icons/seeds.png"),
+  require("./assets/icons/flowers.png"),
+  require("./assets/icons/sprayers.png"),
+  require("./assets/icons/pots.png"),
+  require("./assets/icons/fertilizers.png"),
+  require("./assets/images/plants_1.png"),
+  require("./assets/images/plants_2.png"),
+  require("./assets/images/plants_3.png"),
+  require("./assets/images/explore_1.png"),
+  require("./assets/images/explore_2.png"),
+  require("./assets/images/explore_3.png"),
+  require("./assets/images/explore_4.png"),
+  require("./assets/images/explore_5.png"),
+  require("./assets/images/explore_6.png"),
+  require("./assets/images/illustration_1.png"),
+  require("./assets/images/illustration_2.png"),
+  require("./assets/images/illustration_3.png"),
+  require("./assets/images/avatar.png"),
+];
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+export default class App extends Component {
+  state = {
+    isLoadingComplete: false,
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+  handleResourceAsync = async () => {
+    //we're cache all the images
+    //fro better performance on the app
+    const cacheImages = images.map((img) => {
+      return Asset.fromModule(image).downloadAsync();
+    });
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+    return Promise.all(cacheImages);
+  };
 
-export default App;
+  render() {
+    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+      return (
+        <AppLoading
+          startAsync={this.handleResourceAsync}
+          onError={(error) => console.warn(error)}
+          onFinish={this.setState({ isLoadingComplete: true })}
+        />
+      );
+    }
+    return (
+      <View>
+        <Navigation />
+      </View>
+    );
+  }
+}

@@ -1,11 +1,11 @@
 import React from "react";
 
-function Browser() {
+function Forgot() {
   return (
     <div>
-      <h1>Broser</h1>
+      <h1>Forgot</h1>
     </div>
   );
 }
 
-export default Browser;
+export default Forgot;
